@@ -11,13 +11,13 @@
     <!-- Nav Bar -->
     <md-toolbar class="md-primary" md-elevation="1">
       <h3 class="md-title" style="flex: 1">imatrix</h3>
-      <md-button>Home</md-button>
-      <md-button>Upload</md-button>
+      <md-button @click="homePage()">Home</md-button>
+      <md-button @click="uploadPage()">Upload</md-button>
       <md-button>History</md-button>
     </md-toolbar>
     
     <!-- Jumbotron -->
-    <md-content id="jumbotron" class="md-elevation-1 md-secondary">
+    <md-content v-if="this.home == true" id="jumbotron" class="md-elevation-1 md-secondary">
       <div id="title-group">
       <swapping-squares-spinner
           :animation-duration="2500"
@@ -35,20 +35,14 @@
       </p>
     </md-content>
 
-    <md-dialog-alert
-      :md-active.sync="first"
-      md-content="Your post has been deleted!"
-      md-confirm-text="Cool!" />
-
-    <md-dialog-alert
-      :md-active.sync="second"
-      md-title="Post created!"
-      md-content="Your post <strong>Material Design is awesome</strong> has been created." />
-
-    <div id="section">
+    <div v-if="this.home == true" id="section">
       <span class="md-subheading md-accent">Click the button below to upload your matrix. Then we'll evaluate it!</span> 
-      <md-button class="md-accent md-raised">Get Started!</md-button>
+      <md-button @click="uploadPage()" class="md-accent md-raised">Get Started!</md-button>
     </div>
+
+    <upload-page v-if="this.upload == true"></upload-page>
+
+
 
     <!-- <md-button class="md-accent md-raised" @click="first = true">Alert</md-button>
     <md-button class="md-primary md-raised" @click="second = true">Alert</md-button> -->
@@ -85,7 +79,7 @@
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld'
+import UploadPage from './components/UploadPage.vue'
 import {AtomSpinner, 
         FlowerSpinner, 
         HollowDotsSpinner, 
@@ -106,11 +100,29 @@ export default {
 
   data: () => ({
       first: false,
-      second: false
+      second: false,
+      home: true,
+      upload: false,
+      results: false
   }),
 
+  methods: {
+    homePage: function()
+    {
+      this.home = true;
+      this.upload= false;
+      this.results= false;
+    },
+
+    uploadPage: function()
+    {
+      this.home = false;
+      this.upload= true;
+      this.results= false;
+    },
+  },
+
   components: {
-    HelloWorld,
     AtomSpinner,
     FlowerSpinner,
     HollowDotsSpinner,
@@ -124,7 +136,8 @@ export default {
     BreedingRhombusSpinner,
     SpringSpinner,
     SemipolarSpinner,
-    SwappingSquaresSpinner
+    SwappingSquaresSpinner,
+    UploadPage
   }
 }
 </script>
