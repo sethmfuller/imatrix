@@ -48,20 +48,7 @@
 <script>
 import UploadPage from './components/UploadPage.vue'
 import ResultsPage from './components/Results.vue'
-import {AtomSpinner, 
-        FlowerSpinner, 
-        HollowDotsSpinner, 
-        IntersectingCirclesSpinner, 
-        OrbitSpinner, 
-        TrinityRingsSpinner, 
-        CirclesToRhombusesSpinner,
-        SelfBuildingSquareSpinner,
-        FulfillingBouncingCircleSpinner,
-        FingerprintSpinner,
-        BreedingRhombusSpinner,
-        SpringSpinner,
-        SemipolarSpinner,
-        SwappingSquaresSpinner} from 'epic-spinners'
+import {SwappingSquaresSpinner} from 'epic-spinners'
 import { throws } from 'assert';
 
 export default {
