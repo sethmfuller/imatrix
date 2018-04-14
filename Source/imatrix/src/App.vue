@@ -40,46 +40,14 @@
       <md-button @click="uploadPage()" class="md-accent md-raised">Get Started!</md-button>
     </div>
 
-    <upload-page v-if="this.upload == true"></upload-page>
-
-
-
-    <!-- <md-button class="md-accent md-raised" @click="first = true">Alert</md-button>
-    <md-button class="md-primary md-raised" @click="second = true">Alert</md-button> -->
-
-    
-
-
-    <!-- <md-button class="md-icon-button md-raised md-primary">
-        <md-icon>thumb_up</md-icon>
-    </md-button> -->
-
-    <!-- Accent Button
-    <md-button class="md-icon-button md-raised md-accent">
-        <md-icon>thumb_down</md-icon>
-    </md-button> -->
-
-    <!-- Primary button -->
-    <!-- <md-button class="md-fab md-primary">
-        <md-icon>add</md-icon>
-    </md-button> -->
-
-    <!-- Spinner -->
-    <!-- <semipolar-spinner
-          :animation-duration="2000"
-          :size="60"
-          :color="'#ff5252'"
-     /> -->
-
-     <!-- <md-field>
-      <label>Upload Matrix Image</label>
-      <md-file v-model="single" accept="image/*" />
-    </md-field> -->
+    <upload-page v-if="this.upload == true" @resultsMethod="resultsMethod"></upload-page>
+    <results-page v-if="this.results == true" :resultingVals="resultingVals"></results-page>
   </div>
 </template>
 
 <script>
 import UploadPage from './components/UploadPage.vue'
+import ResultsPage from './components/Results.vue'
 import {AtomSpinner, 
         FlowerSpinner, 
         HollowDotsSpinner, 
@@ -94,6 +62,7 @@ import {AtomSpinner,
         SpringSpinner,
         SemipolarSpinner,
         SwappingSquaresSpinner} from 'epic-spinners'
+import { throws } from 'assert';
 
 export default {
   name: 'App',
@@ -103,7 +72,8 @@ export default {
       second: false,
       home: true,
       upload: false,
-      results: false
+      results: false,
+      resultingVals: ''
   }),
 
   methods: {
@@ -120,6 +90,19 @@ export default {
       this.upload= true;
       this.results= false;
     },
+
+    resultsMethod: function(resultingVals)
+    {
+      this.home = false;
+      this.upload = false;
+      
+      this.resultingVals = resultingVals;
+      
+      this.results = true;
+    },
+
+
+
   },
 
   components: {

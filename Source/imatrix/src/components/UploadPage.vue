@@ -27,8 +27,6 @@
 
 
     </div>
-
-    
 </template>
 
 <script>
@@ -39,7 +37,6 @@ export default {
         return {
             dialog: false,
             resultingVals: ''
-
         }
     },
 
@@ -62,7 +59,7 @@ export default {
         emitUpload: function()
         {
             this.dialog = false;
-            this.$emit("results", this.resultingVals);
+            this.$emit("resultsMethod", this.resultingVals);
         }
     }
 
