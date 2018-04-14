@@ -18,7 +18,17 @@
     
     <!-- Jumbotron -->
     <md-content id="jumbotron" class="md-elevation-1 md-secondary">
-      <span id="jumbotron-title" class="md-title md-display-4">imatrix</span>
+      <div id="title-group">
+      <swapping-squares-spinner
+          :animation-duration="2500"
+          :size="60"
+          :color="'#ff5252'"
+          id="logo"
+        />
+      <span id="jumbotron-title" class="md-title md-display-4">
+        imatrix
+      </span>
+      </div>
       <p id="headline" class="md-headline">We, here at imatrix.com, use predictive neural networks to determine the numbers 
         inside an image of a matrix a user uploads. Then, using our predictions, we calculate the determinant 
         and inverse matrix from the uploaded picture. This is a quick and fun way to do your linear algebra!
@@ -35,7 +45,10 @@
       md-title="Post created!"
       md-content="Your post <strong>Material Design is awesome</strong> has been created." />
 
-    <md-button class="md-accent md-raised">Upload</md-button>
+    <div id="section">
+      <span class="md-subheading md-accent">Click the button below to upload your matrix. Then we'll evaluate it!</span> 
+      <md-button class="md-accent md-raised">Get Started!</md-button>
+    </div>
 
     <!-- <md-button class="md-accent md-raised" @click="first = true">Alert</md-button>
     <md-button class="md-primary md-raised" @click="second = true">Alert</md-button> -->
@@ -85,7 +98,8 @@ import {AtomSpinner,
         FingerprintSpinner,
         BreedingRhombusSpinner,
         SpringSpinner,
-        SemipolarSpinner} from 'epic-spinners'
+        SemipolarSpinner,
+        SwappingSquaresSpinner} from 'epic-spinners'
 
 export default {
   name: 'App',
@@ -109,7 +123,8 @@ export default {
     FingerprintSpinner,
     BreedingRhombusSpinner,
     SpringSpinner,
-    SemipolarSpinner
+    SemipolarSpinner,
+    SwappingSquaresSpinner
   }
 }
 </script>
@@ -129,15 +144,37 @@ export default {
   text-align: center;
 }
 
+#title-group
+{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#logo
+{
+  display: flex;
+  flex-direction: row;
+}
+
 #jumbotron-title
 {
-  margin-left: 16px;
-  flex-grow: 1;
+  margin-left: 30px;
 }
 
 #headline
 {
   margin-left: 16px;
   margin-right: 16px;
+}
+
+#section
+{
+  margin-top: 50px;
+  display: flex;
+  flex-direction:row;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 </style>
