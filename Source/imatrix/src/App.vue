@@ -1,12 +1,5 @@
 <template>
   <div id="app" class="md-scrollbar">
-    
-    <!-- Nav -->
-    <!-- <md-tabs class="md-primary" md-alignment="right">
-      <md-tab id="tab-home" md-label="Home"></md-tab>
-      <md-tab id="tab-pages" md-label="Upload"></md-tab>
-      <md-tab id="tab-posts" md-label="History"></md-tab>
-    </md-tabs> -->
 
     <!-- Nav Bar -->
     <md-toolbar class="md-primary" md-elevation="1">
@@ -41,7 +34,7 @@
     </div>
 
     <upload-page v-if="this.upload == true" @resultsMethod="resultsMethod"></upload-page>
-    <results-page v-if="this.results == true" :resultingVals="resultingVals"></results-page>
+    <results-page v-if="this.results == true" :resultingVals="this.resultingVals"></results-page>
   </div>
 </template>
 
@@ -78,36 +71,22 @@ export default {
       this.results= false;
     },
 
-    resultsMethod: function(resultingVals)
+    resultsMethod: function(vals)
     {
       this.home = false;
       this.upload = false;
       
-      this.resultingVals = resultingVals;
+      this.resultingVals = vals;
       
       this.results = true;
     },
 
-
-
   },
 
   components: {
-    AtomSpinner,
-    FlowerSpinner,
-    HollowDotsSpinner,
-    IntersectingCirclesSpinner,
-    OrbitSpinner,
-    TrinityRingsSpinner,
-    CirclesToRhombusesSpinner,
-    SelfBuildingSquareSpinner,
-    FulfillingBouncingCircleSpinner,
-    FingerprintSpinner,
-    BreedingRhombusSpinner,
-    SpringSpinner,
-    SemipolarSpinner,
     SwappingSquaresSpinner,
-    UploadPage
+    UploadPage,
+    ResultsPage
   }
 }
 </script>

@@ -45,7 +45,7 @@ export default {
             // upload image to backend, and get results
 
             // Demo Data
-            let results = {
+            var results = {
                 determinant: -16,
                 inverse:[ [-1/2, 5/16], [7/16, -1/8] ], 
                 values: [ [2,5], [7,8] ],
