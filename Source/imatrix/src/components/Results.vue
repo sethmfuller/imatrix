@@ -14,3 +14,25 @@
     <!-- <md-button class="md-fab md-primary">
         <md-icon>add</md-icon>
     </md-button> -->
+
+    <template>
+        <div id="results">
+
+        </div>
+    </template>
+    
+    <script>
+    export default {
+        name: 'Results',
+
+        prods: ['resultingVals'],
+
+
+    
+    }
+    </script>
+    
+    <style>
+    
+    </style>
+    

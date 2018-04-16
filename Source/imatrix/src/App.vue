@@ -34,7 +34,7 @@
     </div>
 
     <upload-page v-if="this.upload == true" @resultsMethod="resultsMethod"></upload-page>
-    <results-page v-if="this.results == true" :resultingVals="resultingVals"></results-page>
+    <results-page v-if="this.results == true" :resultingVals="this.resultingVals"></results-page>
   </div>
 </template>
 
@@ -71,22 +71,21 @@ export default {
       this.results= false;
     },
 
-    resultsMethod: function(resultingVals)
+    resultsMethod: function(vals)
     {
       this.home = false;
       this.upload = false;
       
-      this.resultingVals = resultingVals;
+      this.resultingVals = vals;
       
       this.results = true;
     },
 
-
-
   },
   components: {
     SwappingSquaresSpinner,
-    UploadPage
+    UploadPage,
+    ResultsPage
   }
 }
 </script>
