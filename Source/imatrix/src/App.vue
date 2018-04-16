@@ -1,12 +1,5 @@
 <template>
   <div id="app" class="md-scrollbar">
-    
-    <!-- Nav -->
-    <!-- <md-tabs class="md-primary" md-alignment="right">
-      <md-tab id="tab-home" md-label="Home"></md-tab>
-      <md-tab id="tab-pages" md-label="Upload"></md-tab>
-      <md-tab id="tab-posts" md-label="History"></md-tab>
-    </md-tabs> -->
 
     <!-- Nav Bar -->
     <md-toolbar class="md-primary" md-elevation="1">
@@ -91,21 +84,7 @@ export default {
 
 
   },
-
   components: {
-    AtomSpinner,
-    FlowerSpinner,
-    HollowDotsSpinner,
-    IntersectingCirclesSpinner,
-    OrbitSpinner,
-    TrinityRingsSpinner,
-    CirclesToRhombusesSpinner,
-    SelfBuildingSquareSpinner,
-    FulfillingBouncingCircleSpinner,
-    FingerprintSpinner,
-    BreedingRhombusSpinner,
-    SpringSpinner,
-    SemipolarSpinner,
     SwappingSquaresSpinner,
     UploadPage
   }
