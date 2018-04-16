@@ -22,7 +22,8 @@
         imatrix
       </span>
       </div>
-      <p id="headline" class="md-headline">We, here at imatrix.com, use predictive neural networks to determine the numbers 
+      <p id="headline" class="md-headline">
+        We, here at imatrix.com, use predictive neural networks to determine the numbers 
         inside an image of a matrix a user uploads. Then, using our predictions, we calculate the determinant 
         and inverse matrix from the uploaded picture. This is a quick and fun way to do your linear algebra!
       </p>
@@ -33,8 +34,15 @@
       <md-button @click="uploadPage()" class="md-accent md-raised">Get Started!</md-button>
     </div>
 
-    <upload-page v-if="this.upload == true" @resultsMethod="resultsMethod"></upload-page>
-    <results-page v-if="this.results == true" :resultingVals="this.resultingVals"></results-page>
+    <upload-page 
+      v-if="this.upload == true" 
+      @resultsMethod="resultsMethod">
+    </upload-page>
+    
+    <results-page 
+      v-if="this.results == true" 
+      :resultingVals="this.resultingVals">
+    </results-page>
   </div>
 </template>
 
@@ -85,7 +93,7 @@ export default {
   components: {
     SwappingSquaresSpinner,
     UploadPage,
-    ResultsPage
+    ResultsPage,
   }
 }
 </script>
