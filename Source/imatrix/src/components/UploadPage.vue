@@ -48,7 +48,7 @@ export default {
             var results = {
                 determinant: -16,
                 inverse:[ [-1/2, 5/16], [7/16, -1/8] ], 
-                values: [ [2,5], [7,8] ],
+                values: [ [3,5], [7,0] ],
             }
 
             this.resultingVals = results;

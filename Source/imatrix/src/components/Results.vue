@@ -10,7 +10,11 @@
             </md-content>
 
             <md-content class="md-elevation-1 card top-cards">
-                <img id="uploaded-image" class="md-elevation-3" src="../assets/matrix.jpg" alt="matrix" width="200px" height="200px">
+                <table>
+                    <tr v-for="row in this.resultingVals.values">
+                        <td v-for="val in row" class="md-display-1">{{precisionRound(val, 1)}}</td>
+                    </tr>
+                </table>
                 <h3>Predicted Matrix</h3>
                 <div>
                     <md-button class="md-icon-button md-raised md-primary">
@@ -33,7 +37,11 @@
                     <span class="md-display-4">{{this.resultingVals.determinant}}</span>
                 </div>
                 <div class="results-containers-small">
-                    <img id="uploaded-image" class="md-elevation-3" src="../assets/matrix.jpg" alt="matrix" width="200px" height="200px">
+                    <table>
+                        <tr v-for="row in this.resultingVals.inverse">
+                            <td v-for="val in row" class="md-display-1">{{precisionRound(val, 1)}}</td>
+                        </tr>
+                    </table>
                     <h3>Inverse Matrix</h3>
                 </div>
             </md-content>
@@ -59,6 +67,21 @@ export default {
             position: 'center',
             duration: 4000,
             isInfinity: false
+        }
+    },
+
+    computed: {
+
+        n: function() {
+            console.log(this.resultingVals.values.length);
+            return this.resultingVals.values.length;
+        }
+    },
+
+    methods: {
+        precisionRound: function(number, precision) {
+            var factor = Math.pow(10, precision);
+            return Math.round(number * factor) / factor;
         }
     }
 }
@@ -115,6 +138,19 @@ export default {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+table {
+    border-left: 1px solid rgba(255,255,255,0.7);
+    border-right: 1px solid rgba(255,255,255,0.7);
+    width:200px;
+    height: 200px;
+    
+}
+
+td
+{
+    text-align: center;
 }
 
 </style>
