@@ -4,7 +4,7 @@
     <md-empty-state
         md-icon="file_upload"
         md-label="Upload Matrix"
-        md-description="Upload you image in png or jpg format. Then the upload button. The evaluation of the matrix may take a few minutes.">
+        md-description="Upload you image in png or jpg format. It must be an n x n matrix. Then the upload button. The evaluation of the matrix may take a few minutes.">
         <md-field>
             <label>Upload Matrix Image</label>
                 <md-file v-model="single" accept="image/*" />

@@ -2,7 +2,7 @@
   <div id="app" class="md-scrollbar">
 
     <!-- Nav Bar -->
-    <md-toolbar class="md-primary" md-elevation="1">
+    <md-toolbar class="md-primary" id="nav" md-elevation="1">
       <h3 class="md-title" style="flex: 1">imatrix</h3>
       <md-button @click="homePage()">Home</md-button>
       <md-button @click="uploadPage()">Upload</md-button>
