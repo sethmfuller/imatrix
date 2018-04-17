@@ -41,7 +41,8 @@
     
     <results-page 
       v-if="this.results == true" 
-      :resultingVals="this.resultingVals">
+      :resultingVals="this.resultingVals"
+      @uploadPage="uploadPage">
     </results-page>
   </div>
 </template>
@@ -74,6 +75,10 @@ export default {
 
     uploadPage: function()
     {
+      // Erase previous stored matrix vals
+      this.resultingVals = "";
+
+      // Change view
       this.home = false;
       this.upload= true;
       this.results= false;
