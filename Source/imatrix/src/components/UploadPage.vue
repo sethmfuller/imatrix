@@ -73,16 +73,22 @@ export default {
             let formData = new FormData();
             formData.append('image', this.file_data_url);
 
+
             // Send image to server
             var response = jQuery.ajax({
                 type: 'POST',
                 contentType: false,
                 processData: false,
                 url: `http://localhost:5000/upload`,
-                data: formData
-            });
+                data: formData,
+                dataType: "json"
+            }).done(function(){
+                alert("done");
+            });
 
             console.log(response);
+            console.log(response.responseText);
+
 
             // Demo Data
             var results = {
