@@ -31,6 +31,7 @@
 </template>
 
 <script>
+import { postImage } from '../api/api_calls.js'
 export default {
     name: 'UploadPage',
 
@@ -72,9 +73,16 @@ export default {
             let formData = new FormData();
             formData.append('image', this.file_data_url);
 
-            fetchData().then(data => {
-                //do stuff
-            });
+            // Send image to server
+            var response = jQuery.ajax({
+                type: 'POST',
+                contentType: false,
+                processData: false,
+                url: `http://localhost:5000/upload`,
+                data: formData
+            });
+
+            console.log(response);
 
             // Demo Data
             var results = {
