@@ -68,6 +68,10 @@ export default {
 
         },
 
+        logResults (data) {
+            console.log(data);
+        },
+
         uploadImage () {
 
             let formData = new FormData();
@@ -81,13 +85,24 @@ export default {
                 processData: false,
                 url: `http://localhost:5000/upload`,
                 data: formData,
-                dataType: "json"
-            }).done(function(){
-                alert("done");
-            });
+                dataType: "json",
+                success: function(json, status){
+                    if (status != "success") {
+                        console.log("Error loading data");
+                        return;
+                    }
+                    console.log("Data loaded!");
+                },
+                error: function(result, status, err) {
+                    console.log("Error loading data");
+                    return;
+                },
+                jsonCallback: "logResults"
+            }).responseJSON;
 
+            console.log(typeof(response));
             console.log(response);
-            console.log(response.responseText);
+            // console.log(response.responseJSON);
 
 
             // Demo Data
