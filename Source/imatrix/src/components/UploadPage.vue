@@ -2,16 +2,22 @@
     <div id="upload-page">
 
         <!-- Import image form -->
-        <md-empty-state
-            md-icon="file_upload"
-            md-label="Upload Matrix"
-            md-description="Upload you image in png or jpg format. It must be an n x n matrix. Then the upload button. The evaluation of the matrix may take a few minutes.">
-            <md-field>
-                <label>Upload Matrix Image</label>
-                    <md-file v-model="single" accept="image/*" />
-            </md-field><br>
-            <md-button @click="upload()" type="submit" class="md-primary md-raised">Upload</md-button>
-        </md-empty-state>
+        <form @submit.prevent="uploadImage()">
+            <md-empty-state
+                md-icon="file_upload"
+                md-label="Upload Matrix"
+                md-description="Upload you image in png or jpg format. It must be an n x n matrix. Then the upload button. The evaluation of the matrix may take a few minutes.">
+                <md-field>
+                    <label>Upload Matrix Image</label>
+                    <md-file 
+                        v-bind="this.form.file_name" 
+                        @change="retrieveImage($event)" 
+                        accept="image/*" />
+                </md-field>
+                <br>
+                <md-button type="submit" class="md-primary md-raised">Upload</md-button>
+            </md-empty-state>
+        </form>
 
         <!-- Popup dialog alerting user that image was sucessfully uploaded -->
         <md-dialog :md-active.sync="dialog">
@@ -31,13 +37,44 @@ export default {
     data() {
         return {
             dialog: false,
-            resultingVals: ''
+            resultingVals: null,
+            form : {
+                file_name: null,
+                file_data_url: null
+            }
         }
     },
 
     methods: {
-        upload: function() {
-            // upload image to backend, and get results
+
+        createImage (file) {
+            var image = new Image();
+            var reader = new FileReader();
+
+            reader.onload = (e) => {
+                this.form.file = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        },
+
+        retrieveImage (e) {
+            
+            // Retrieve image from form and place in data
+            var files = e.target.files || e.dataTransfer.files;
+            if (!files.length)
+                console.log("Error during upload");
+            this.createImage(files[0]);
+
+        },
+
+        uploadImage () {
+
+            let formData = new FormData();
+            formData.append('image', this.file_data_url);
+
+            fetchData().then(data => {
+                //do stuff
+            });
 
             // Demo Data
             var results = {
