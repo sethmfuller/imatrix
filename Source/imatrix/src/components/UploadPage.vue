@@ -41,7 +41,8 @@ export default {
             resultingVals: null,
             form : {
                 file_name: null,
-                file_data_url: null
+                file_data_url: null,
+                file: null,
             }
         }
     },
@@ -65,11 +66,7 @@ export default {
             if (!files.length)
                 console.log("Error during upload");
             this.createImage(files[0]);
-
-        },
-
-        logResults (data) {
-            console.log(data);
+            this.form.file = files[0];
         },
 
         uploadImage () {
@@ -77,6 +74,7 @@ export default {
             let formData = new FormData();
             formData.append('image', this.file_data_url);
 
+            var data;
 
             // Send image to server
             var response = jQuery.ajax({
@@ -96,15 +94,19 @@ export default {
                 error: function(result, status, err) {
                     console.log("Error loading data");
                     return;
-                },
-                jsonCallback: "logResults"
-            }).responseJSON;
+                }
+            });
 
-            console.log(typeof(response));
+            var example_JSON = {
+                'blah': 4
+            }
+
+            console.log(example_JSON);
+
+            console.log(response["responseJSON"]);
             console.log(response);
-            // console.log(response.responseJSON);
 
-
+            
             // Demo Data
             var results = {
                 determinant: -16,
@@ -112,7 +114,10 @@ export default {
                 values: [ [3,5], [7,0] ],
             }
 
-            this.resultingVals = results;
+            this.resultingVals = {
+                'results': results,
+                'file': this.form.file
+            };
 
             this.dialog = true;
         },

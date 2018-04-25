@@ -9,14 +9,14 @@
 
             <!-- Original Image Card Container -->
             <md-content class="md-elevation-1 card top-cards ">
-                <img id="uploaded-image" class="md-elevation-3" src="../assets/matrix.jpg" alt="matrix" width="200px" height="200px">
+                <img id="uploaded-image" class="md-elevation-3" :src="resultingVals.file" alt="matrix" width="200px" height="200px">
                 <h3>Uploaded Matrix</h3>
             </md-content>
 
             <!-- Predicted Image Card Container -->
             <md-content class="md-elevation-1 card top-cards">
                 <table>
-                    <tr v-for="(row, rowIndex) in this.resultingVals.values" :key="rowIndex">
+                    <tr v-for="(row, rowIndex) in this.resultingVals.results.values" :key="rowIndex">
                         <td v-for="(val, valIndex) in row" class="md-display-1" :key="valIndex">{{precisionRound(val, 1)}}</td>
                     </tr>
                 </table>
@@ -44,13 +44,13 @@
                 <!-- Determinant Results -->
                 <div class="results-containers-small">
                     <h3>Determinant</h3>
-                    <span class="md-display-4">{{this.resultingVals.determinant}}</span>
+                    <span class="md-display-4">{{this.resultingVals.results.determinant}}</span>
                 </div>
 
                 <!-- Inverse Matrix Results -->
                 <div class="results-containers-small">
                     <table>
-                        <tr v-for="(row, rowIndex) in this.resultingVals.inverse" :key="rowIndex">
+                        <tr v-for="(row, rowIndex) in this.resultingVals.results.inverse" :key="rowIndex">
                             <td v-for="(val, valIndex) in row" class="md-display-1" :key="valIndex">{{precisionRound(val, 1)}}</td>
                         </tr>
                     </table>
