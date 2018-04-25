@@ -15,16 +15,18 @@
                         accept="image/*" />
                 </md-field>
                 <br>
-                <md-button type="submit" class="md-primary md-raised">Upload</md-button>
+                <md-button v-if="this.form.file == null" disabled type="submit" class="md-primary md-raised">Upload</md-button>
+                <md-button v-if="this.form.file != null" type="submit" class="md-primary md-raised">Upload</md-button>
+
             </md-empty-state>
         </form>
 
         <!-- Popup dialog alerting user that image was sucessfully uploaded -->
         <md-dialog :md-active.sync="dialog">
-            <md-dialog-title>Image Uploaded</md-dialog-title>
+            <md-dialog-title>{{this.dialogText}}</md-dialog-title>
 
             <md-dialog-actions>
-                <md-button class="md-primary" @click="emitUpload">Ok</md-button>
+                <md-button class="md-primary" @click="emitUpload">Great</md-button>
             </md-dialog-actions>
         </md-dialog>
     </div>
@@ -43,7 +45,9 @@ export default {
                 file_name: null,
                 file_data_url: null,
                 file: null,
-            }
+            },
+            dialogText: "Image Uploaded",
+            requestSuccess: null
         }
     },
 
@@ -52,7 +56,6 @@ export default {
         createImage (file) {
             var image = new Image();
             var reader = new FileReader();
-
             reader.onload = (e) => {
                 this.form.file = e.target.result;
             };
@@ -72,7 +75,7 @@ export default {
         uploadImage () {
 
             let formData = new FormData();
-            formData.append('image', this.file_data_url);
+            formData.append('image', this.form.file);
 
             var data;
 
@@ -97,13 +100,6 @@ export default {
                 }
             });
 
-            var example_JSON = {
-                'blah': 4
-            }
-
-            console.log(example_JSON);
-
-            console.log(response["responseJSON"]);
             console.log(response);
 
             
@@ -126,7 +122,7 @@ export default {
         {
             this.dialog = false;
             this.$emit("resultsMethod", this.resultingVals);
-        }
+        },
     }
 
 }
