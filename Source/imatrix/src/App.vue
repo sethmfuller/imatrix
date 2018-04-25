@@ -2,7 +2,7 @@
   <div id="app" class="md-scrollbar">
 
     <!-- Nav Bar -->
-    <md-toolbar class="md-primary" md-elevation="1">
+    <md-toolbar class="md-primary" id="nav" md-elevation="1">
       <h3 class="md-title" style="flex: 1">imatrix</h3>
       <md-button @click="homePage()">Home</md-button>
       <md-button @click="uploadPage()">Upload</md-button>
@@ -22,7 +22,8 @@
         imatrix
       </span>
       </div>
-      <p id="headline" class="md-headline">We, here at imatrix.com, use predictive neural networks to determine the numbers 
+      <p id="headline" class="md-headline">
+        We, here at imatrix.com, use predictive neural networks to determine the numbers 
         inside an image of a matrix a user uploads. Then, using our predictions, we calculate the determinant 
         and inverse matrix from the uploaded picture. This is a quick and fun way to do your linear algebra!
       </p>
@@ -33,8 +34,16 @@
       <md-button @click="uploadPage()" class="md-accent md-raised">Get Started!</md-button>
     </div>
 
-    <upload-page v-if="this.upload == true" @resultsMethod="resultsMethod"></upload-page>
-    <results-page v-if="this.results == true" :resultingVals="this.resultingVals"></results-page>
+    <upload-page 
+      v-if="this.upload == true" 
+      @resultsMethod="resultsMethod">
+    </upload-page>
+    
+    <results-page 
+      v-if="this.results == true" 
+      :resultingVals="this.resultingVals"
+      @uploadPage="uploadPage">
+    </results-page>
   </div>
 </template>
 
@@ -66,6 +75,10 @@ export default {
 
     uploadPage: function()
     {
+      // Erase previous stored matrix vals
+      this.resultingVals = "";
+
+      // Change view
       this.home = false;
       this.upload= true;
       this.results= false;
@@ -85,7 +98,7 @@ export default {
   components: {
     SwappingSquaresSpinner,
     UploadPage,
-    ResultsPage
+    ResultsPage,
   }
 }
 </script>

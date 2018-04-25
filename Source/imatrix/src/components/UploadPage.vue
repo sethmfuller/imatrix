@@ -1,57 +1,123 @@
 <template>
     <div id="upload-page">
 
-    <md-empty-state
-        md-icon="file_upload"
-        md-label="Upload Matrix"
-        md-description="Upload you image in png or jpg format. Then the upload button. The evaluation of the matrix may take a few minutes.">
-        <md-field>
-            <label>Upload Matrix Image</label>
-                <md-file v-model="single" accept="image/*" />
-        </md-field><br>
-        <md-button @click="upload()" type="submit" class="md-primary md-raised">Upload</md-button>
-    </md-empty-state>
+        <!-- Import image form -->
+        <form @submit.prevent="uploadImage()">
+            <md-empty-state
+                md-icon="file_upload"
+                md-label="Upload Matrix"
+                md-description="Upload you image in png or jpg format. It must be an n x n matrix. Then the upload button. The evaluation of the matrix may take a few minutes.">
+                <md-field>
+                    <label>Upload Matrix Image</label>
+                    <md-file 
+                        v-bind="this.form.file_name" 
+                        @change="retrieveImage($event)" 
+                        accept="image/*" />
+                </md-field>
+                <br>
+                <md-button type="submit" class="md-primary md-raised">Upload</md-button>
+            </md-empty-state>
+        </form>
 
-    <md-dialog-alert
-        :md-active.sync="dialog"
-        md-content="Your matrix has been uploaded!!"
-        md-confirm-text="Ok" />
+        <!-- Popup dialog alerting user that image was sucessfully uploaded -->
+        <md-dialog :md-active.sync="dialog">
+            <md-dialog-title>Image Uploaded</md-dialog-title>
 
-    <md-dialog :md-active.sync="dialog">
-      <md-dialog-title>Image Uploaded</md-dialog-title>
-
-      <md-dialog-actions>
-        <md-button class="md-primary" @click="emitUpload">Ok</md-button>
-      </md-dialog-actions>
-    </md-dialog>
-
-
+            <md-dialog-actions>
+                <md-button class="md-primary" @click="emitUpload">Ok</md-button>
+            </md-dialog-actions>
+        </md-dialog>
     </div>
 </template>
 
 <script>
+import { postImage } from '../api/api_calls.js'
 export default {
     name: 'UploadPage',
 
     data() {
         return {
             dialog: false,
-            resultingVals: ''
+            resultingVals: null,
+            form : {
+                file_name: null,
+                file_data_url: null,
+                file: null,
+            }
         }
     },
 
     methods: {
-        upload: function() {
-            // upload image to backend, and get results
 
+        createImage (file) {
+            var image = new Image();
+            var reader = new FileReader();
+
+            reader.onload = (e) => {
+                this.form.file = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        },
+
+        retrieveImage (e) {
+            
+            // Retrieve image from form and place in data
+            var files = e.target.files || e.dataTransfer.files;
+            if (!files.length)
+                console.log("Error during upload");
+            this.createImage(files[0]);
+            this.form.file = files[0];
+        },
+
+        uploadImage () {
+
+            let formData = new FormData();
+            formData.append('image', this.file_data_url);
+
+            var data;
+
+            // Send image to server
+            var response = jQuery.ajax({
+                type: 'POST',
+                contentType: false,
+                processData: false,
+                url: `http://localhost:5000/upload`,
+                data: formData,
+                dataType: "json",
+                success: function(json, status){
+                    if (status != "success") {
+                        console.log("Error loading data");
+                        return;
+                    }
+                    console.log("Data loaded!");
+                },
+                error: function(result, status, err) {
+                    console.log("Error loading data");
+                    return;
+                }
+            });
+
+            var example_JSON = {
+                'blah': 4
+            }
+
+            console.log(example_JSON);
+
+            console.log(response["responseJSON"]);
+            console.log(response);
+
+            
             // Demo Data
             var results = {
                 determinant: -16,
                 inverse:[ [-1/2, 5/16], [7/16, -1/8] ], 
-                values: [ [2,5], [7,8] ],
+                values: [ [3,5], [7,0] ],
             }
 
-            this.resultingVals = results;
+            this.resultingVals = {
+                'results': results,
+                'file': this.form.file
+            };
 
             this.dialog = true;
         },
@@ -65,7 +131,3 @@ export default {
 
 }
 </script>
-
-<style>
-
-</style>
