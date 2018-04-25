@@ -32,13 +32,13 @@ def uploadImage():
     im = load_img('output.jpg', target_size=(28,28), grayscale=True)
 
     # Splice up image
-    #im_quad1 = im.crop((125, 25, 180, 100))
-    #im_quad2 = im.crop((25, 25, 100, 100))
-    #im_quad3 = im.crop((30, 125, 100, 200))
-    #im_quad4 = im.crop((115, 115, 180, 224))
+    im_quad1 = im.crop((125, 25, 180, 100))
+    im_quad2 = im.crop((25, 25, 100, 100))
+    im_quad3 = im.crop((30, 125, 100, 200))
+    im_quad4 = im.crop((115, 115, 180, 224))
 
     # Preprocess each sub-image
-    im_quad1 = img_to_array(im)
+    im_quad1 = img_to_array(im_quad1)
     im_quad1 = 255 - im_quad1
     im_quad1 /= 255
     im_quad1 = im_quad1.reshape(-1, 28,28,1)
