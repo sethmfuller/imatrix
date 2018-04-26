@@ -1,8 +1,10 @@
 import os
 import json
+import cv2
 import math as m
 import pandas as pd
 from PIL import Image
+import PIL.ImageOps  
 from numpy.linalg import inv
 from numpy.linalg import det
 from numpy.linalg import eig
@@ -37,19 +39,17 @@ def uploadImage():
     # Load Image
     filename = 'output.jpg'
     im = load_img(filename, target_size=(56, 56), grayscale=True)
-
-    # im_array = img_to_array(im)
-
-    # print("im_type: ", type(im))
+    
+    
 
     # Crop Image
-    im_quad1 = im.crop((28, 0, 56, 28))
-
-    im_quad1.save("im_quad1.jpg")
-
-    im_quad2 = im.crop((0, 0, 28, 28))
+    im_quad2 = im.crop((28, 0, 56, 28))
 
     im_quad2.save("im_quad2.jpg")
+
+    im_quad1 = im.crop((0, 0, 28, 28))
+
+    im_quad1.save("im_quad1.jpg")
 
     im_quad3 = im.crop((0, 28, 28, 56))
 
@@ -86,14 +86,18 @@ def uploadImage():
 
     # Predict each image
     im_quad1_prediction = int(model.predict_classes(im_quad1)[0])
+    print(model.predict_classes(im_quad1))
     im_quad2_prediction = int(model.predict_classes(im_quad2)[0])
+    print(model.predict_classes(im_quad2))
     im_quad3_prediction = int(model.predict_classes(im_quad3)[0])
+    print(model.predict_classes(im_quad3))
     im_quad4_prediction = int(model.predict_classes(im_quad4)[0])
+    print(model.predict_classes(im_quad4))
 
     # Calculations
 
     # matrix A
-    a = np.matrix([[im_quad2_prediction, 1], [im_quad3_prediction, 2]])
+    a = np.matrix([[im_quad1_prediction, im_quad2_prediction], [im_quad3_prediction, im_quad4_prediction]])
 
     # compute determinant
     a_det = det(a)

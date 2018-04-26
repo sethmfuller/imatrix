@@ -51,7 +51,7 @@
                 <div class="results-containers-small">
                     <table>
                         <tr v-for="(row, rowIndex) in this.resultingVals.results.inverse" :key="rowIndex">
-                            <td v-for="(val, valIndex) in row" class="md-display-1" :key="valIndex">{{precisionRound(val, 1)}}</td>
+                            <td v-for="(val, valIndex) in row" class="md-display-1" :key="valIndex">{{precisionRound(val, 2)}}</td>
                         </tr>
                     </table>
                     <h3>Inverse Matrix</h3>
