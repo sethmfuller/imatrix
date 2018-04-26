@@ -87,6 +87,8 @@ export default {
             let formData = new FormData();
             formData.append('image', this.form.file);
 
+            var self = this;
+
             // Send image to server
             jQuery.ajax({
                 type: 'POST',
@@ -100,21 +102,22 @@ export default {
                         console.log("Error loading data");
                         return;
                     }
-                    console.log(status);
-                    this.takeInData(json);
+
+                    self.responseData = json;
+                    self.takeInData(json);
+                    
+                    // this.takeInData(json);
                 },
                 error: function(result, status, err) {
                     console.log("Error loading data");
                     return;
                 }
-
             });
         },
 
         takeInData (data) {
             this.responseData = data;
             console.log("Data loaded!");
-            console.log(this.responseData);
             this.dialog = true;
         },
 

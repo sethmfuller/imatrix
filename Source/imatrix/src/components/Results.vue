@@ -44,7 +44,7 @@
                 <!-- Determinant Results -->
                 <div class="results-containers-small">
                     <h3>Determinant</h3>
-                    <span class="md-display-4">{{this.resultingVals.results.determinant}}</span>
+                    <span class="md-display-4">{{precisionRound(this.resultingVals.results.determinant, 3)}}</span>
                 </div>
 
                 <!-- Inverse Matrix Results -->
