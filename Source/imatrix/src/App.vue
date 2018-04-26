@@ -6,7 +6,6 @@
       <h3 class="md-title" style="flex: 1">imatrix</h3>
       <md-button @click="homePage()">Home</md-button>
       <md-button @click="uploadPage()">Upload</md-button>
-      <md-button>History</md-button>
     </md-toolbar>
     
     <!-- Jumbotron -->

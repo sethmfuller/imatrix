@@ -16,8 +16,20 @@
                 </md-field>
                 <br>
                 <md-button v-if="this.form.file == null" disabled type="submit" class="md-primary md-raised">Upload</md-button>
-                <md-button v-if="this.form.file != null" type="submit" class="md-primary md-raised">Upload</md-button>
-
+                <md-button v-if="this.form.file != null && this.form.load == false && this.form.uploaded == false" type="submit" class="md-primary md-raised">Upload</md-button>
+                <radar-spinner
+                    :animation-duration="2500"
+                    :size="60"
+                    :color="'#448aff'"
+                    v-if="this.form.load == true"
+                    id="logo"
+                />
+                <md-icon 
+                    class="md-size-2x"
+                    style="color: #448aff"
+                    v-if="this.form.uploaded == true">
+                    check_circle
+                </md-icon>
             </md-empty-state>
         </form>
 
@@ -34,8 +46,14 @@
 
 <script>
 import { postImage } from '../api/api_calls.js'
+import { RadarSpinner, SemipolarSpinner} from 'epic-spinners'
 export default {
     name: 'UploadPage',
+
+    components: {
+        RadarSpinner,
+        SemipolarSpinner
+    },
 
     data() {
         return {
@@ -45,6 +63,8 @@ export default {
                 file_name: null,
                 file_data_url: null,
                 file: null,
+                load: false,
+                uploaded: false,
             },
             dialogText: "Image Uploaded",
             requestSuccess: null,
@@ -84,6 +104,8 @@ export default {
 
         uploadImage () {
 
+            this.form.load = true;
+
             let formData = new FormData();
             formData.append('image', this.form.file);
 
@@ -118,6 +140,8 @@ export default {
         takeInData (data) {
             this.responseData = data;
             console.log("Data loaded!");
+            this.form.load = false;
+            this.form.uploaded = true;
             this.dialog = true;
         },
 
