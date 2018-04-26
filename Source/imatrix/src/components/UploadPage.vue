@@ -47,11 +47,19 @@ export default {
                 file: null,
             },
             dialogText: "Image Uploaded",
-            requestSuccess: null
+            requestSuccess: null,
+            responseData: null,
         }
     },
 
     methods: {
+
+        resetData () {
+            this.resultingVals = null;
+            this.form.file_name = null;
+            this.form.file_data_url = null;
+            this.form.file = null;
+        },
 
         createImage (file) {
             var image = new Image();
@@ -63,6 +71,8 @@ export default {
         },
 
         retrieveImage (e) {
+
+            this.resetData();
             
             // Retrieve image from form and place in data
             var files = e.target.files || e.dataTransfer.files;
@@ -77,10 +87,8 @@ export default {
             let formData = new FormData();
             formData.append('image', this.form.file);
 
-            var data;
-
             // Send image to server
-            var response = jQuery.ajax({
+            jQuery.ajax({
                 type: 'POST',
                 contentType: false,
                 processData: false,
@@ -92,36 +100,39 @@ export default {
                         console.log("Error loading data");
                         return;
                     }
-                    console.log("Data loaded!");
+                    console.log(status);
+                    this.takeInData(json);
                 },
                 error: function(result, status, err) {
                     console.log("Error loading data");
                     return;
                 }
+
             });
+        },
 
-            console.log(response);
-
-            
-            // Demo Data
-            var results = {
-                determinant: -16,
-                inverse:[ [-1/2, 5/16], [7/16, -1/8] ], 
-                values: [ [3,5], [7,0] ],
-            }
-
-            this.resultingVals = {
-                'results': results,
-                'file': this.form.file
-            };
-
+        takeInData (data) {
+            this.responseData = data;
+            console.log("Data loaded!");
+            console.log(this.responseData);
             this.dialog = true;
         },
 
         emitUpload: function()
         {
+            var results = {
+                determinant: this.responseData.determinant,
+                inverse: this.responseData.inverse, 
+                values: this.responseData.values,
+            }
+
+            var returnVals = {
+                'results': results,
+                'file': this.form.file,
+            }
+
             this.dialog = false;
-            this.$emit("resultsMethod", this.resultingVals);
+            this.$emit("resultsMethod", returnVals);
         },
     }
 
